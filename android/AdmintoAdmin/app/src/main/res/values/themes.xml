@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.AdminApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/neon_blue</item>
+        <item name="colorPrimaryVariant">@color/neon_blue_dark</item>
+        <item name="colorOnPrimary">@color/bg_primary</item>
+        <item name="colorSecondary">@color/primary_blue</item>
+        <item name="colorOnSecondary">@color/bg_primary</item>
+        <item name="android:colorBackground">@color/bg_primary</item>
+        <item name="colorSurface">@color/bg_secondary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:navigationBarColor">@color/bg_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- GlowButton -->
+    <style name="GlowButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/bg_glow_button</item>
+        <item name="android:textColor">@color/bg_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:elevation">8dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:paddingVertical">14dp</item>
+    </style>
+
+    <!-- OutlineButton -->
+    <style name="OutlineButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:background">@drawable/bg_outline_button</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="strokeColor">@color/glass_border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:paddingVertical">14dp</item>
+    </style>
+
+    <!-- GlassCard -->
+    <style name="GlassCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/bg_card</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/glass_border</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Input Fields -->
+    <style name="AdminInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/bg_input</item>
+        <item name="boxStrokeColor">@color/input_border</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="hintTextColor">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="errorTextColor">@color/error_red</item>
+    </style>
+
+    <!-- ExposedDropdownMenu -->
+    <style name="AdminInputLayout.ExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@color/bg_input</item>
+        <item name="boxStrokeColor">@color/input_border</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="hintTextColor">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="errorTextColor">@color/error_red</item>
+    </style>
+
+    <!-- OTP Cell -->
+    <style name="OtpCell">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_marginHorizontal">4dp</item>
+        <item name="android:background">@drawable/bg_otp_input</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:paddingHorizontal">0dp</item>
+    </style>
+
+    <!-- Badge styles -->
+    <style name="BadgeBlue">
+        <item name="android:background">@drawable/bg_badge_blue</item>
+        <item name="android:textColor">@color/neon_blue</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:paddingVertical">3dp</item>
+    </style>
+
+    <style name="BadgeGreen">
+        <item name="android:background">@drawable/bg_badge_green</item>
+        <item name="android:textColor">@color/success_green</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:paddingVertical">3dp</item>
+    </style>
+
+</resources>

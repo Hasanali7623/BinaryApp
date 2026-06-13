@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="180dp"
+    android:viewportWidth="200"
+    android:viewportHeight="180">
+
+    <path android:fillColor="#060D1E"
+        android:pathData="M100,10 C150,10 190,50 190,100 C190,150 150,190 100,190 C50,190 10,150 10,100 C10,50 50,10 100,10Z" />
+
+    <!-- Fingerprint-like shield -->
+    <path android:fillColor="#00000000"
+        android:strokeColor="#00B4FF"
+        android:strokeWidth="3"
+        android:pathData="M100,35 L65,55 L65,100 C65,125 80,147 100,157 C120,147 135,125 135,100 L135,55 Z" />
+
+    <!-- Fingerprint lines -->
+    <path android:fillColor="#00000000"
+        android:strokeColor="#1A00B4FF"
+        android:strokeWidth="2"
+        android:pathData="M85,85 C90,78 110,78 115,85" />
+    <path android:fillColor="#00000000"
+        android:strokeColor="#2A00B4FF"
+        android:strokeWidth="2"
+        android:pathData="M80,93 C88,83 112,83 120,93" />
+    <path android:fillColor="#00000000"
+        android:strokeColor="#3A00B4FF"
+        android:strokeWidth="2"
+        android:pathData="M78,102 C87,90 113,90 122,102" />
+
+    <!-- Center circle -->
+    <path android:fillColor="#00B4FF"
+        android:pathData="M94,94 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0Z" />
+</vector>

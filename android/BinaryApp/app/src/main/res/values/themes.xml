@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ─── Base App Theme ─────────────────────────────────────────────────── -->
+    <style name="Theme.BinaryApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/neon_blue</item>
+        <item name="colorPrimaryVariant">@color/neon_blue_dark</item>
+        <item name="colorOnPrimary">@color/bg_primary</item>
+        <item name="colorSecondary">@color/neon_blue</item>
+        <item name="colorOnSecondary">@color/bg_primary</item>
+        <item name="android:colorBackground">@color/bg_primary</item>
+        <item name="colorSurface">@color/bg_secondary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:navigationBarColor">@color/bg_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:fontFamily">@font/inter</item>
+    </style>
+
+    <!-- ─── Splash Screen Theme ────────────────────────────────────────────── -->
+    <style name="Theme.BinaryApp.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/bg_primary</item>
+        <item name="postSplashScreenTheme">@style/Theme.BinaryApp</item>
+    </style>
+
+    <!-- ─── Glow Button (Primary) ─────────────────────────────────────────── -->
+    <style name="GlowButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/bg_glow_button</item>
+        <item name="android:textColor">@color/bg_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:elevation">8dp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- ─── Outline Button (Secondary) ───────────────────────────────────── -->
+    <style name="OutlineButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:background">@drawable/bg_outline_button</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="strokeColor">@color/glass_border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- ─── Social Button ─────────────────────────────────────────────────── -->
+    <style name="SocialButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:background">@drawable/bg_social_button</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="strokeColor">@color/glass_border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">10dp</item>
+    </style>
+
+    <!-- ─── Glow Input Layout ─────────────────────────────────────────────── -->
+    <style name="GlowInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/input_bg</item>
+        <item name="boxStrokeColor">@color/input_border</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="hintTextColor">@color/text_secondary</item>
+        <item name="errorTextColor">@color/error_red</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+    </style>
+
+    <!-- ─── OTP Input Style ───────────────────────────────────────────────── -->
+    <style name="OtpInputStyle">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_marginHorizontal">4dp</item>
+        <item name="android:background">@drawable/bg_otp_input</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:paddingHorizontal">0dp</item>
+    </style>
+
+    <!-- ─── OTP Error Display ─────────────────────────────────────────────── -->
+    <style name="OtpErrorDisplay">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_marginHorizontal">4dp</item>
+        <item name="android:background">@drawable/bg_otp_error</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/error_red</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

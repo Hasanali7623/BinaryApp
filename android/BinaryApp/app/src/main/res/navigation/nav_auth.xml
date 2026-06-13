@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_auth"
+    app:startDestination="@id/loginFragment">
+
+    <!-- Login -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.binaryapp.ui.auth.login.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_emailVerificationFragment"
+            app:destination="@id/emailVerificationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <!-- FIX #1 & #3: popUpTo loginFragment inclusive=true removes it from the back stack
+             after successful login, preventing the user from pressing Back to return to login. -->
+        <action
+            android:id="@+id/action_loginFragment_to_trustDeviceFragment"
+            app:destination="@id/trustDeviceFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Register -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.binaryapp.ui.auth.register.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_emailVerificationFragment"
+            app:destination="@id/emailVerificationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Email Verification -->
+    <fragment
+        android:id="@+id/emailVerificationFragment"
+        android:name="com.binaryapp.ui.auth.verify.EmailVerificationFragment"
+        android:label="Verify Email"
+        tools:layout="@layout/fragment_email_verification">
+        <action
+            android:id="@+id/action_emailVerificationFragment_to_verifySuccessFragment"
+            app:destination="@id/verifySuccessFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/emailVerificationFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_emailVerificationFragment_to_verifyFailedFragment"
+            app:destination="@id/verifyFailedFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Verify Success -->
+    <fragment
+        android:id="@+id/verifySuccessFragment"
+        android:name="com.binaryapp.ui.auth.verify.VerifySuccessFragment"
+        android:label="Verification Success"
+        tools:layout="@layout/fragment_verify_success">
+        <action
+            android:id="@+id/action_verifySuccessFragment_to_trustDeviceFragment"
+            app:destination="@id/trustDeviceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/loginFragment" />
+    </fragment>
+
+    <!-- Verify Failed -->
+    <fragment
+        android:id="@+id/verifyFailedFragment"
+        android:name="com.binaryapp.ui.auth.verify.VerifyFailedFragment"
+        android:label="Verification Failed"
+        tools:layout="@layout/fragment_verify_failed">
+        <action
+            android:id="@+id/action_verifyFailedFragment_to_emailVerificationFragment"
+            app:destination="@id/emailVerificationFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/emailVerificationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Trust Device -->
+    <fragment
+        android:id="@+id/trustDeviceFragment"
+        android:name="com.binaryapp.ui.auth.trustdevice.TrustDeviceFragment"
+        android:label="Trust Device"
+        tools:layout="@layout/fragment_trust_device">
+        <action
+            android:id="@+id/action_trustDeviceFragment_to_accessGrantedFragment"
+            app:destination="@id/accessGrantedFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Access Granted -->
+    <fragment
+        android:id="@+id/accessGrantedFragment"
+        android:name="com.binaryapp.ui.auth.accessgranted.AccessGrantedFragment"
+        android:label="Access Granted"
+        tools:layout="@layout/fragment_access_granted">
+        <action
+            android:id="@+id/action_accessGrantedFragment_to_biometricFragment"
+            app:destination="@id/biometricFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Biometric Setup -->
+    <fragment
+        android:id="@+id/biometricFragment"
+        android:name="com.binaryapp.ui.auth.biometric.BiometricFragment"
+        android:label="Biometric Setup"
+        tools:layout="@layout/fragment_biometric">
+        <action
+            android:id="@+id/action_biometricFragment_to_devicePairingFragment"
+            app:destination="@id/devicePairingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Device Pairing -->
+    <fragment
+        android:id="@+id/devicePairingFragment"
+        android:name="com.binaryapp.ui.auth.devicepairing.DevicePairingFragment"
+        android:label="Device Pairing"
+        tools:layout="@layout/fragment_device_pairing">
+        <action
+            android:id="@+id/action_devicePairingFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Dashboard -->
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.binaryapp.ui.dashboard.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_devicePairingFragment"
+            app:destination="@id/devicePairingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Forgot Password -->
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.binaryapp.ui.auth.forgotpassword.ForgotPasswordFragment"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forgot_password">
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_resetLinkSentFragment"
+            app:destination="@id/resetLinkSentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Reset Link Sent -->
+    <fragment
+        android:id="@+id/resetLinkSentFragment"
+        android:name="com.binaryapp.ui.auth.resetpassword.ResetLinkSentFragment"
+        android:label="Reset Link Sent"
+        tools:layout="@layout/fragment_reset_link_sent">
+        <action
+            android:id="@+id/action_resetLinkSentFragment_to_createNewPasswordFragment"
+            app:destination="@id/createNewPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_resetLinkSentFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Create New Password -->
+    <fragment
+        android:id="@+id/createNewPasswordFragment"
+        android:name="com.binaryapp.ui.auth.resetpassword.CreateNewPasswordFragment"
+        android:label="Create New Password"
+        tools:layout="@layout/fragment_create_new_password">
+        <action
+            android:id="@+id/action_createNewPasswordFragment_to_passwordChangedFragment"
+            app:destination="@id/passwordChangedFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/createNewPasswordFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Password Changed -->
+    <fragment
+        android:id="@+id/passwordChangedFragment"
+        android:name="com.binaryapp.ui.auth.resetpassword.PasswordChangedFragment"
+        android:label="Password Changed"
+        tools:layout="@layout/fragment_password_changed">
+        <action
+            android:id="@+id/action_passwordChangedFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

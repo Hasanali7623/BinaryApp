@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="40dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_icon_btn"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/text_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="BINARYAPP"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivHero"
+            android:layout_width="220dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/img_device_trust"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack" />
+
+        <TextView
+            android:id="@+id/tvBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_badge_blue"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="DEVICE SECURITY"
+            android:textColor="@color/neon_blue"
+            android:textSize="10sp"
+            android:letterSpacing="0.1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivHero" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="Trust This Device?"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBadge" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Skip verification on this device for future secure logins."
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <!-- Device Info Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardDeviceInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/glass_bg"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Device row -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:src="@drawable/ic_phone" android:tint="@color/neon_blue" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="CURRENT DEVICE" android:textColor="@color/text_hint" android:textSize="10sp" android:letterSpacing="0.05" />
+                        <TextView android:id="@+id/tvDeviceName" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="iPhone 15 Pro" android:textColor="@color/text_primary" android:textSize="14sp" android:textStyle="bold" />
+                    </LinearLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:background="@drawable/bg_badge_green"
+                        android:paddingHorizontal="8dp" android:paddingVertical="3dp"
+                        android:text="VERIFIED SECURE" android:textColor="@color/success_green" android:textSize="9sp" />
+                </LinearLayout>
+
+                <!-- Browser row -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:src="@drawable/ic_browser" android:tint="@color/text_secondary" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="BROWSER" android:textColor="@color/text_hint" android:textSize="10sp" android:letterSpacing="0.05" />
+                        <TextView android:id="@+id/tvBrowser" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="InfraView Mobile App" android:textColor="@color/text_primary" android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Location row -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:src="@drawable/ic_location" android:tint="@color/text_secondary" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="LOCATION" android:textColor="@color/text_hint" android:textSize="10sp" android:letterSpacing="0.05" />
+                        <TextView android:id="@+id/tvLocation" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Fetching location…" android:textColor="@color/text_primary" android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Last activity row -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:src="@drawable/ic_clock" android:tint="@color/text_secondary" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="LAST ACTIVITY" android:textColor="@color/text_hint" android:textSize="10sp" android:letterSpacing="0.05" />
+                        <TextView android:id="@+id/tvLastActivity" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Just Now" android:textColor="@color/text_primary" android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Security Benefits -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBenefits"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/glass_bg"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardDeviceInfo">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="SECURITY BENEFITS"
+                    android:textColor="@color/text_secondary" android:textSize="11sp" android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="✓  Faster login experience" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="4dp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="✓  Reduced verification requests" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="4dp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="✓  Secure-encrypted authentication" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="4dp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="✓  Protected by enterprise-grade security" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="4dp" />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_marginTop="12dp" android:background="@drawable/bg_glass_subtle" android:padding="12dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                        android:src="@drawable/ic_shield" android:tint="@color/neon_blue" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Zero Trust Security" android:textColor="@color/neon_blue"
+                            android:textSize="13sp" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Even trusted devices are continuously monitored and protected through encrypted security protocols."
+                            android:textColor="@color/text_secondary" android:textSize="11sp" android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnTrustDevice"
+            style="@style/GlowButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:text="Trust Device"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardBenefits" />
+
+        <Button
+            android:id="@+id/btnNotNow"
+            style="@style/OutlineButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="12dp"
+            android:text="Not Now"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnTrustDevice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

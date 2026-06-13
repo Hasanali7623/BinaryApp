@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Backgrounds -->
+    <color name="bg_primary">#030816</color>
+    <color name="bg_secondary">#060D1E</color>
+    <color name="bg_card">#0A1628</color>
+
+    <!-- Neon Blue - Primary Accent -->
+    <color name="neon_blue">#00B4FF</color>
+    <color name="neon_blue_dark">#0077AA</color>
+    <color name="neon_blue_glow">#1A00B4FF</color>
+
+    <!-- Glass morphism -->
+    <color name="glass_bg">#0D1A2E</color>
+    <color name="glass_bg_selected">#0F2040</color>
+    <color name="glass_border">#1A2A4A</color>
+    <color name="glass_subtle">#08142A</color>
+
+    <!-- Text colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#8BA3C4</color>
+    <color name="text_hint">#4A6080</color>
+
+    <!-- Status Colors -->
+    <color name="success_green">#00E676</color>
+    <color name="error_red">#FF3B3B</color>
+    <color name="warning_yellow">#FFB300</color>
+
+    <!-- Input fields -->
+    <color name="input_bg">#0A1628</color>
+    <color name="input_border">#1A2A4A</color>
+    <color name="input_border_focused">#00B4FF</color>
+
+    <!-- Badges -->
+    <color name="badge_blue_bg">#0A1628</color>
+    <color name="badge_green_bg">#0A2010</color>
+    <color name="badge_red_bg">#2A0808</color>
+
+    <!-- Material 3 required -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

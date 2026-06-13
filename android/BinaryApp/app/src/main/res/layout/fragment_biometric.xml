@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="40dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_icon_btn"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/text_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="BINARYAPP"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivHero"
+            android:layout_width="220dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/img_biometric"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack" />
+
+        <TextView
+            android:id="@+id/tvBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_badge_blue"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="ADVANCED SECURITY"
+            android:textColor="@color/neon_blue"
+            android:textSize="10sp"
+            android:letterSpacing="0.1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivHero" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="Enable Biometric\nSecurity"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBadge" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Secure your InfraView account using Face ID or Fingerprint authentication for faster and safer access."
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <!-- Benefits list -->
+        <LinearLayout
+            android:id="@+id/layoutBenefits"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="⚡  Faster Login Experience" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🔒  Enterprise-Grade Protection" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🛡️  Secure Session Access" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🔑  Reduced Password Usage" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="✅  Instant Device Verification" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+        </LinearLayout>
+
+        <!-- Biometric options -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardFaceId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/glass_bg_selected"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutBenefits">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- FIX #2: icon gets an ID so BiometricFragment can tint it programmatically -->
+                <ImageView
+                    android:id="@+id/ivFaceIdIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_face_id"
+                    android:tint="@color/text_secondary" />
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Face ID" android:textColor="@color/text_primary"
+                        android:textSize="16sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Use facial recognition to unlock instantly."
+                        android:textColor="@color/text_secondary" android:textSize="12sp" android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <!-- FIX #2: checked=false — code controls selection exclusively via selectBiometric() -->
+                <RadioButton
+                    android:id="@+id/rbFaceId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/neon_blue"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:checked="false" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardFingerprint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/glass_bg"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardFaceId">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- FIX #2: icon gets an ID so BiometricFragment can tint it programmatically -->
+                <ImageView
+                    android:id="@+id/ivFingerprintIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_fingerprint"
+                    android:tint="@color/neon_blue" />
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Fingerprint" android:textColor="@color/text_primary"
+                        android:textSize="16sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Scan your fingerprint for secure access."
+                        android:textColor="@color/text_secondary" android:textSize="12sp" android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <!-- FIX #2: clickable/focusable=false — code controls selection exclusively -->
+                <RadioButton
+                    android:id="@+id/rbFingerprint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/neon_blue"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:checked="true" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnEnableBiometrics"
+            style="@style/GlowButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:text="Enable Biometrics"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardFingerprint" />
+
+        <Button
+            android:id="@+id/btnSkip"
+            style="@style/OutlineButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="12dp"
+            android:text="Skip For Now"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnEnableBiometrics" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

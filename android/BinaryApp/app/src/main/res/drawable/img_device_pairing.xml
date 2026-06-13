@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="180dp"
+    android:viewportWidth="200"
+    android:viewportHeight="180">
+
+    <path android:fillColor="#060D1E"
+        android:pathData="M100,10 C150,10 190,50 190,100 C190,150 150,190 100,190 C50,190 10,150 10,100 C10,50 50,10 100,10Z" />
+
+    <!-- Laptop -->
+    <path android:fillColor="#0A1628"
+        android:strokeColor="#00B4FF"
+        android:strokeWidth="2"
+        android:pathData="M60,60 L140,60 L140,120 L60,120 Z" />
+
+    <!-- Screen -->
+    <path android:fillColor="#030816"
+        android:pathData="M64,64 L136,64 L136,116 L64,116 Z" />
+
+    <!-- Screen glow lines -->
+    <path android:fillColor="#00000000"
+        android:strokeColor="#1A00B4FF"
+        android:strokeWidth="1"
+        android:pathData="M72,78 L128,78 M72,86 L128,86 M72,94 L110,94" />
+
+    <!-- Keyboard base -->
+    <path android:fillColor="#0A1628"
+        android:strokeColor="#00B4FF"
+        android:strokeWidth="2"
+        android:pathData="M50,122 L150,122 L148,134 L52,134 Z" />
+
+    <!-- Connection dots -->
+    <path android:fillColor="#00B4FF"
+        android:pathData="M96,140 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0Z" />
+    <path android:fillColor="#00E676"
+        android:pathData="M30,70 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0Z" />
+    <path android:fillColor="#00B4FF"
+        android:pathData="M162,70 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0Z" />
+
+    <!-- Connection lines -->
+    <path android:fillColor="#00000000"
+        android:strokeColor="#1A00B4FF"
+        android:strokeWidth="1"
+        android:pathData="M34,74 L60,90 M166,74 L140,90" />
+</vector>

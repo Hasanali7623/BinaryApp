@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BinaryApp Admin</string>
+    <string name="app_tagline">Enterprise Administration Platform</string>
+    <!-- Landing -->
+    <string name="create_organization">Create Organization</string>
+    <string name="join_existing">Join Existing Organization</string>
+    <string name="btn_continue">Continue →</string>
+    <!-- Auth -->
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="business_email">Business Email</string>
+    <string name="password">Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="company_name">Company Name</string>
+    <string name="company_size">Company Size</string>
+    <string name="create_organization_account">Create Organization Account</string>
+    <!-- Verification -->
+    <string name="verify_email">Verify Email</string>
+    <string name="verify_organization">Verify Organization</string>
+    <string name="enter_code">Enter 6-digit verification code</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="change_email">Change Email Address</string>
+    <!-- Setup -->
+    <string name="org_setup_title">Set Up Your Organization</string>
+    <string name="create_workspace">Create Workspace</string>
+    <string name="invite_team">Invite Your Team</string>
+    <string name="configure_security">Configure Security Policies</string>
+    <string name="org_ready">Your Organization Is Ready</string>
+    <!-- Common -->
+    <string name="loading">Loading…</string>
+    <string name="save_draft">Save Draft</string>
+    <string name="skip_for_now">Skip For Now</string>
+    <string name="back_to_sign_in">← Back To Sign In</string>
+    <string name="apply_security_policies">Apply Security Policies</string>
+    <string name="go_to_dashboard">Go To Admin Dashboard</string>
+    <string name="send_invitations">Send Invitations</string>
+    <string name="add_to_preview">+ Add To Preview List</string>
+    <string name="terms_text">I agree to the Terms of Service and Privacy Policy applicable to BinaryApp enterprise users.</string>
+</resources>

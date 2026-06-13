@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="40dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_icon_btn"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/text_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="BINARYAPP"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivHero"
+            android:layout_width="220dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/img_device_pairing"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack" />
+
+        <TextView
+            android:id="@+id/tvBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_badge_blue"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="DEVICE PAIRING"
+            android:textColor="@color/neon_blue"
+            android:textSize="10sp"
+            android:letterSpacing="0.1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivHero" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="Connect Your First&#10;Device"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBadge" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Pair your workstation, laptop, or server to start securely accessing and managing devices from anywhere."
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <!-- QR Code Pairing option -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardQrCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/glass_bg_selected"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView android:layout_width="32dp" android:layout_height="32dp"
+                    android:src="@drawable/ic_qr_code" android:tint="@color/neon_blue" />
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="QR Code Pairing" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Scan a QR code from your workstation for instant secure pairing."
+                        android:textColor="@color/text_secondary" android:textSize="12sp" android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_right" android:tint="@color/neon_blue" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- QR Code display area (shown when tapped) -->
+        <LinearLayout
+            android:id="@+id/groupQrCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/bg_glass_card"
+            android:paddingVertical="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardQrCode">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scan with your workstation app"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- White background frame for QR code legibility -->
+            <FrameLayout
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:background="#FFFFFF"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/ivQrCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvQrExpiry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valid for 5 minutes"
+                android:textColor="@color/neon_blue"
+                android:textSize="11sp"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+
+        <!-- Pairing Code option -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardPairingCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/glass_bg"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/groupQrCode">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView android:layout_width="32dp" android:layout_height="32dp"
+                    android:src="@drawable/ic_key" android:tint="@color/text_secondary" />
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Pairing Code" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Enter a secure pairing code generated on your workstation."
+                        android:textColor="@color/text_secondary" android:textSize="12sp" android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_right" android:tint="@color/text_secondary" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Pairing Code expanded panel -->
+        <LinearLayout
+            android:id="@+id/groupPairingCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_glass_card"
+            android:padding="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardPairingCode">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Pairing Code"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvPairingCode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ABC-123"
+                    android:textColor="@color/neon_blue"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.3" />
+
+                <ImageButton
+                    android:id="@+id/btnCopyCode"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_icon_btn"
+                    android:src="@drawable/ic_copy"
+                    android:tint="@color/neon_blue"
+                    android:padding="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter this code on your workstation to complete pairing."
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp" />
+
+            <Button
+                android:id="@+id/btnRefreshCode"
+                style="@style/OutlineButton"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="12dp"
+                android:text="Generate New Code" />
+        </LinearLayout>
+
+        <!-- Add Manually option -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardAddManually"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/glass_bg"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/groupPairingCode">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView android:layout_width="32dp" android:layout_height="32dp"
+                    android:src="@drawable/ic_monitor" android:tint="@color/text_secondary" />
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Add Device Manually" android:textColor="@color/text_primary"
+                        android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Register and configure a device manually."
+                        android:textColor="@color/text_secondary" android:textSize="12sp" android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_right" android:tint="@color/text_secondary" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Add Manually expanded panel -->
+        <LinearLayout
+            android:id="@+id/groupAddManually"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_glass_card"
+            android:padding="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardAddManually">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Device Name"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:layout_marginBottom="6dp" />
+
+            <EditText
+                android:id="@+id/etDeviceName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_input_field"
+                android:hint="e.g. My Workstation"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="14sp"
+                android:paddingHorizontal="14dp"
+                android:inputType="text"
+                android:imeOptions="actionNext" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IP Address / Hostname"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="6dp" />
+
+            <EditText
+                android:id="@+id/etHostname"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_input_field"
+                android:hint="e.g. 192.168.1.100"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="14sp"
+                android:paddingHorizontal="14dp"
+                android:inputType="text"
+                android:imeOptions="actionNext" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Port"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="6dp" />
+
+            <EditText
+                android:id="@+id/etPort"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_input_field"
+                android:hint="Default: 9090"
+                android:text="9090"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="14sp"
+                android:paddingHorizontal="14dp"
+                android:inputType="number"
+                android:imeOptions="actionDone" />
+
+            <Button
+                android:id="@+id/btnAddDeviceManually"
+                style="@style/GlowButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:text="Add Device" />
+        </LinearLayout>
+
+        <!-- Enrollment note -->
+        <LinearLayout
+            android:id="@+id/layoutEnrollment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/groupAddManually">
+
+            <ImageView android:layout_width="16dp" android:layout_height="16dp"
+                android:src="@drawable/ic_shield" android:tint="@color/neon_blue" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="SECURE DEVICE ENROLLMENT"
+                android:textColor="@color/text_secondary" android:textSize="10sp" android:letterSpacing="0.05" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnContinuePairing"
+            style="@style/GlowButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:text="Continue Pairing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutEnrollment" />
+
+        <Button
+            android:id="@+id/btnSkipDashboard"
+            style="@style/OutlineButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="12dp"
+            android:text="Skip &amp; Explore Dashboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnContinuePairing" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

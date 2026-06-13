@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="180dp"
+    android:viewportWidth="200"
+    android:viewportHeight="180">
+
+    <path android:fillColor="#060D1E"
+        android:pathData="M100,10 C150,10 190,50 190,100 C190,150 150,190 100,190 C50,190 10,150 10,100 C10,50 50,10 100,10Z" />
+
+    <!-- Globe/network icon -->
+    <path android:fillColor="#00000000"
+        android:strokeColor="#00B4FF"
+        android:strokeWidth="2"
+        android:pathData="M100,40 C100,40 70,70 70,100 C70,130 100,160 100,160 C100,160 130,130 130,100 C130,70 100,40 100,40Z" />
+
+    <path android:fillColor="#00000000"
+        android:strokeColor="#1A00B4FF"
+        android:strokeWidth="1.5"
+        android:pathData="M40,100 L160,100" />
+
+    <path android:fillColor="#00000000"
+        android:strokeColor="#1A00B4FF"
+        android:strokeWidth="1.5"
+        android:pathData="M50,70 C70,80 130,80 150,70" />
+
+    <path android:fillColor="#00000000"
+        android:strokeColor="#1A00B4FF"
+        android:strokeWidth="1.5"
+        android:pathData="M50,130 C70,120 130,120 150,130" />
+
+    <path android:fillColor="#00000000"
+        android:strokeColor="#00B4FF"
+        android:strokeWidth="2"
+        android:pathData="M100,40 A60,60 0 0,1 100,160 A60,60 0 0,1 100,40Z" />
+
+    <!-- Center dot -->
+    <path android:fillColor="#00B4FF"
+        android:pathData="M96,96 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0Z" />
+</vector>

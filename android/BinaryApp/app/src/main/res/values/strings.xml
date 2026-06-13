@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BinaryApp</string>
+    <string name="secure_access">SECURE ACCESS</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="remember_device">Remember this device</string>
+    <string name="no_account">Don\'t have an account? </string>
+    <string name="have_account">Already have an account? </string>
+    <string name="verify_email">Verify Your Email</string>
+    <string name="verify_identity">Verify Identity</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="trust_device">Trust Device?</string>
+    <string name="access_granted">Access Granted</string>
+    <string name="enable_biometric">Enable Biometric Security</string>
+    <string name="connect_device">Connect Your First Device</string>
+    <string name="forgot_password_title">Forgot Password?</string>
+    <string name="send_reset_link">Send Reset Link</string>
+    <string name="reset_link_sent">Reset Link Sent</string>
+    <string name="open_email_app">Open Email App</string>
+    <string name="resend_link">Resend Link</string>
+    <string name="create_new_password">Create New Password</string>
+    <string name="update_password">Update Password</string>
+    <string name="password_changed">Password Changed Successfully</string>
+    <string name="back_to_sign_in">Back to Sign In</string>
+    <string name="binaryapp">BINARYAPP</string>
+    <string name="enterprise_security">Enterprise Security</string>
+</resources>

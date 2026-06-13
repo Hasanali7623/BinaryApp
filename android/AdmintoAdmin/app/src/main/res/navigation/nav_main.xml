@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/landingFragment">
+
+    <fragment android:id="@+id/landingFragment"
+        android:name="com.binaryapp.admin.ui.landing.LandingFragment"
+        android:label="Landing" tools:layout="@layout/fragment_landing">
+        <action android:id="@+id/action_landingFragment_to_registerOrgFragment"
+            app:destination="@id/registerOrgFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+        <action android:id="@+id/action_landingFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/loginFragment"
+        android:name="com.binaryapp.admin.ui.auth.login.LoginFragment"
+        android:label="Login" tools:layout="@layout/fragment_login">
+        <action android:id="@+id/action_loginFragment_to_registerOrgFragment"
+            app:destination="@id/registerOrgFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+        <action android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+        <action android:id="@+id/action_loginFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/fade_in" app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/landingFragment" app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment android:id="@+id/registerOrgFragment"
+        android:name="com.binaryapp.admin.ui.auth.register.RegisterOrgFragment"
+        android:label="Create Organization" tools:layout="@layout/fragment_register_org">
+        <action android:id="@+id/action_registerOrgFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left" app:exitAnim="@anim/slide_out_right"/>
+        <action android:id="@+id/action_registerOrgFragment_to_verifyEmailFragment"
+            app:destination="@id/verifyEmailFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/verifyEmailFragment"
+        android:name="com.binaryapp.admin.ui.auth.verify.VerifyEmailFragment"
+        android:label="Verify Email" tools:layout="@layout/fragment_verify_email">
+        <action android:id="@+id/action_verifyEmailFragment_to_verifyOrgIdentityFragment"
+            app:destination="@id/verifyOrgIdentityFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/verifyOrgIdentityFragment"
+        android:name="com.binaryapp.admin.ui.auth.verify.VerifyOrgIdentityFragment"
+        android:label="Verify Organization" tools:layout="@layout/fragment_verify_org_identity">
+        <action android:id="@+id/action_verifyOrgIdentityFragment_to_orgVerifiedFragment"
+            app:destination="@id/orgVerifiedFragment"
+            app:enterAnim="@anim/fade_in" app:exitAnim="@anim/fade_out"/>
+        <action android:id="@+id/action_verifyOrgIdentityFragment_to_invalidCodeFragment"
+            app:destination="@id/invalidCodeFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+        <action android:id="@+id/action_verifyOrgIdentityFragment_to_codeExpiredFragment"
+            app:destination="@id/codeExpiredFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+        <action android:id="@+id/action_verifyOrgIdentityFragment_to_verifyFailedFragment"
+            app:destination="@id/verifyFailedFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/orgVerifiedFragment"
+        android:name="com.binaryapp.admin.ui.auth.verify.OrgVerifiedFragment"
+        android:label="Organization Verified" tools:layout="@layout/fragment_org_verified">
+        <action android:id="@+id/action_orgVerifiedFragment_to_orgSetupFragment"
+            app:destination="@id/orgSetupFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/verifyFailedFragment"
+        android:name="com.binaryapp.admin.ui.auth.verify.VerifyFailedFragment"
+        android:label="Verification Failed" tools:layout="@layout/fragment_verify_failed">
+        <action android:id="@+id/action_verifyFailedFragment_to_verifyEmailFragment"
+            app:destination="@id/verifyEmailFragment"
+            app:popUpTo="@id/verifyEmailFragment" app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment android:id="@+id/invalidCodeFragment"
+        android:name="com.binaryapp.admin.ui.auth.verify.InvalidCodeFragment"
+        android:label="Invalid Code" tools:layout="@layout/fragment_invalid_code"/>
+
+    <fragment android:id="@+id/emailVerifiedFragment"
+        android:name="com.binaryapp.admin.ui.auth.verify.EmailVerifiedFragment"
+        android:label="Email Verified" tools:layout="@layout/fragment_email_verified">
+        <action android:id="@+id/action_emailVerifiedFragment_to_orgSetupFragment"
+            app:destination="@id/orgSetupFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/linkExpiredFragment"
+        android:name="com.binaryapp.admin.ui.auth.verify.LinkExpiredFragment"
+        android:label="Link Expired" tools:layout="@layout/fragment_link_expired">
+        <action android:id="@+id/action_linkExpiredFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/landingFragment"/>
+    </fragment>
+
+    <fragment android:id="@+id/codeExpiredFragment"
+        android:name="com.binaryapp.admin.ui.auth.verify.CodeExpiredFragment"
+        android:label="Code Expired" tools:layout="@layout/fragment_code_expired"/>
+
+    <fragment android:id="@+id/forgotPasswordFragment"
+        android:name="com.binaryapp.admin.ui.auth.forgotpassword.ForgotPasswordFragment"
+        android:label="Forgot Password" tools:layout="@layout/fragment_forgot_password">
+        <action android:id="@+id/action_forgotPasswordFragment_to_recoveryEmailSentFragment"
+            app:destination="@id/recoveryEmailSentFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/recoveryEmailSentFragment"
+        android:name="com.binaryapp.admin.ui.auth.forgotpassword.RecoveryEmailSentFragment"
+        android:label="Recovery Email Sent" tools:layout="@layout/fragment_recovery_email_sent">
+        <action android:id="@+id/action_recoveryEmailSentFragment_to_createNewPasswordFragment"
+            app:destination="@id/createNewPasswordFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/createNewPasswordFragment"
+        android:name="com.binaryapp.admin.ui.auth.forgotpassword.CreateNewPasswordFragment"
+        android:label="Create New Password" tools:layout="@layout/fragment_create_new_password">
+        <action android:id="@+id/action_createNewPasswordFragment_to_passwordChangedFragment"
+            app:destination="@id/passwordChangedFragment"
+            app:enterAnim="@anim/fade_in" app:exitAnim="@anim/fade_out"/>
+    </fragment>
+
+    <fragment android:id="@+id/passwordChangedFragment"
+        android:name="com.binaryapp.admin.ui.auth.forgotpassword.PasswordChangedFragment"
+        android:label="Password Changed" tools:layout="@layout/fragment_password_changed">
+        <action android:id="@+id/action_passwordChangedFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/landingFragment" app:popUpToInclusive="false"/>
+    </fragment>
+
+    <fragment android:id="@+id/orgSetupFragment"
+        android:name="com.binaryapp.admin.ui.setup.OrgSetupFragment"
+        android:label="Organization Setup" tools:layout="@layout/fragment_org_setup">
+        <action android:id="@+id/action_orgSetupFragment_to_workspaceFragment"
+            app:destination="@id/workspaceFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/workspaceFragment"
+        android:name="com.binaryapp.admin.ui.setup.WorkspaceFragment"
+        android:label="Create Workspace" tools:layout="@layout/fragment_workspace">
+        <action android:id="@+id/action_workspaceFragment_to_inviteTeamFragment"
+            app:destination="@id/inviteTeamFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/inviteTeamFragment"
+        android:name="com.binaryapp.admin.ui.setup.InviteTeamFragment"
+        android:label="Invite Team" tools:layout="@layout/fragment_invite_team">
+        <action android:id="@+id/action_inviteTeamFragment_to_securityPolicyFragment"
+            app:destination="@id/securityPolicyFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment android:id="@+id/securityPolicyFragment"
+        android:name="com.binaryapp.admin.ui.setup.SecurityPolicyFragment"
+        android:label="Security Policies" tools:layout="@layout/fragment_security_policy">
+        <action android:id="@+id/action_securityPolicyFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:enterAnim="@anim/fade_in" app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/landingFragment" app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment android:id="@+id/dashboardFragment"
+        android:name="com.binaryapp.admin.ui.dashboard.DashboardFragment"
+        android:label="Organization Ready" tools:layout="@layout/fragment_dashboard">
+        <action android:id="@+id/action_dashboardFragment_to_orgSetupFragment"
+            app:destination="@id/orgSetupFragment"
+            app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+</navigation>
