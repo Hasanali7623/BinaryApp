@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -17,20 +18,28 @@ import com.binaryapp.utils.AuditLogger
 import com.binaryapp.databinding.FragmentDashboardBinding
 import com.binaryapp.ui.auth.MainActivity
 import com.binaryapp.utils.LocationHelper
+import com.binaryapp.viewmodel.AuthViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Dashboard Fragment - Main authenticated screen.
+ * Dashboard Fragment — Main authenticated screen.
  *
- * FIX #6: Session location is now fetched from FusedLocationProvider if permission is available.
- * Additional Fix: Logout properly clears the back stack so re-opening the app goes to login.
+ * HIGH PRIORITY FIXES:
+ * 1. Stats are now loaded via AuthViewModel.loadDashboardStats() which caches results
+ *    in the ViewModel — revisiting the dashboard makes zero additional network calls.
+ * 2. Location is read from SessionManager.cachedLocation first (instant), only fetching
+ *    GPS if the cache is empty (i.e. first visit after login).
+ * 3. AutoLocationTracker now uses lifecycleScope (fixed in AutoLocationTracker.kt)
+ *    — no leak from this fragment.
  */
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
+
+    private val authViewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,33 +70,41 @@ class DashboardFragment : Fragment() {
         binding.tvSessionDevice.text = android.os.Build.MODEL
         binding.tvLoginTime.text = "Logged in at ${formatTime(System.currentTimeMillis())}"
 
-        // Start autonomous background location tracking and sync
+        // ── Background Location Tracking ─────────────────────────────────────
         (requireActivity() as MainActivity).autoLocationTracker.startTrackingFlow()
 
-        // Show real location in the UI
-        val hasLocation = ContextCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED ||
-        ContextCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-
-        if (hasLocation) {
-            binding.tvSessionLocation.text = "Fetching location…"
-            viewLifecycleOwner.lifecycleScope.launch {
-                val location = LocationHelper.getCurrentLocationString(requireContext())
-                _binding?.tvSessionLocation?.text = location
-            }
+        // ── FIX #3: Location — use cache first, only fetch GPS if cache is empty ──
+        val cachedLoc = sessionManager.cachedLocation
+        if (cachedLoc != null) {
+            // Instant — no GPS call needed
+            binding.tvSessionLocation.text = cachedLoc
         } else {
-            binding.tvSessionLocation.text = "Local Network"
+            val hasLocation = ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if (hasLocation) {
+                binding.tvSessionLocation.text = "Fetching location…"
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val location = LocationHelper.getCurrentLocationString(requireContext())
+                    sessionManager.cachedLocation = location   // cache it for future visits
+                    _binding?.tvSessionLocation?.text = location
+                }
+            } else {
+                binding.tvSessionLocation.text = "Local Network"
+            }
         }
 
         // ── Security Subtitle ────────────────────────────────────────────────
         binding.tvSecuritySubtitle.text =
             "All systems operational · 2FA active · ${formatDate(System.currentTimeMillis())}"
 
-        // ── Stats Data Fetching ──────────────────────────────────────────────
-        fetchDashboardStats(sessionManager.userId)
+        // ── FIX #1: Stats — cached in ViewModel, no extra network calls on revisit ──
+        observeDashboardStats()
+        authViewModel.loadDashboardStats(sessionManager.userId)
 
         // ── Quick Actions ────────────────────────────────────────────────────
         binding.cardAddDevice.setOnClickListener {
@@ -114,7 +131,6 @@ class DashboardFragment : Fragment() {
 
         // ── Logout ────────────────────────────────────────────────────────────
         binding.btnLogout.setOnClickListener {
-            // Log the logout action
             AuditLogger.logEvent(
                 requireContext(),
                 sessionManager.userId,
@@ -122,12 +138,10 @@ class DashboardFragment : Fragment() {
                 mapOf("email" to sessionManager.userEmail)
             )
 
-            // Clear all session data including sensitive fields
+            // Clear stats cache on logout so next user gets fresh data
+            authViewModel.clearDashboardStatsCache()
             sessionManager.clearSession()
 
-            // Additional Fix: Pop the entire back stack so the dashboard is removed.
-            // This prevents the system from restoring the dashboard from saved state
-            // after force-close or recent-app removal.
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.dashboardFragment, true)
                 .build()
@@ -139,6 +153,19 @@ class DashboardFragment : Fragment() {
         }
     }
 
+    /**
+     * FIX #1: Observe cached stats from ViewModel.
+     * The observer fires instantly from cache on revisit — zero network calls.
+     */
+    private fun observeDashboardStats() {
+        authViewModel.dashboardStats.observe(viewLifecycleOwner) { stats ->
+            if (stats != null) {
+                binding.tvDeviceCount.text = stats.deviceCount.toString()
+                binding.tvSessionCount.text = stats.sessionCount.toString()
+            }
+        }
+    }
+
     private fun formatTime(millis: Long): String {
         return SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(millis))
     }
@@ -147,40 +174,15 @@ class DashboardFragment : Fragment() {
         return SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date(millis))
     }
 
-    private fun fetchDashboardStats(userId: Long) {
-        if (userId == -1L) return
-        
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                // Fetch trusted devices dynamically
-                val devicesResponse = com.binaryapp.data.remote.SupabaseClient.get("trusted_devices", mapOf("user_id" to "eq.$userId", "select" to "id"))
-                val devices = org.json.JSONArray(devicesResponse)
-                binding.tvDeviceCount.text = devices.length().toString()
-                
-                // Fetch sessions dynamically
-                val sessionsResponse = com.binaryapp.data.remote.SupabaseClient.get("sessions", mapOf("user_id" to "eq.$userId", "select" to "id"))
-                val sessions = org.json.JSONArray(sessionsResponse)
-                // Fallback to 1 if empty because current device is definitely logged in
-                binding.tvSessionCount.text = if (sessions.length() > 0) sessions.length().toString() else "1"
-            } catch (e: Exception) {
-                // Keep default values if network fails
-            }
-        }
-    }
-
     private fun runSecurityScan() {
-        // Disable button during scan
         binding.cardSecurityScan.isClickable = false
-        
-        // Find the TextView inside the card
+
         val tvScan = binding.cardSecurityScan.getChildAt(1) as? android.widget.TextView
         val originalText = tvScan?.text
         tvScan?.text = "Scanning..."
-        
-        // Find the ImageView inside the card
+
         val ivScan = binding.cardSecurityScan.getChildAt(0) as? android.widget.ImageView
-        
-        // Rotate animation
+
         val rotateAnim = android.view.animation.RotateAnimation(
             0f, 360f,
             android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
@@ -191,16 +193,14 @@ class DashboardFragment : Fragment() {
         }
         ivScan?.startAnimation(rotateAnim)
 
-        // Simulate scan delay
         viewLifecycleOwner.lifecycleScope.launch {
             kotlinx.coroutines.delay(2000)
             tvScan?.text = "100% Safe"
             tvScan?.setTextColor(ContextCompat.getColor(requireContext(), R.color.success_green))
             ivScan?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.success_green))
-            
+
             Toast.makeText(requireContext(), "No vulnerabilities found on this device.", Toast.LENGTH_SHORT).show()
-            
-            // Reset after 3 seconds
+
             kotlinx.coroutines.delay(3000)
             tvScan?.text = originalText
             tvScan?.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))

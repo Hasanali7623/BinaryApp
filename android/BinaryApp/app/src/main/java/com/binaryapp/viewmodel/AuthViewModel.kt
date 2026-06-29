@@ -4,9 +4,11 @@ import androidx.lifecycle.*
 import com.binaryapp.data.local.entities.Session
 import com.binaryapp.data.local.entities.TrustedDevice
 import com.binaryapp.data.local.entities.User
+import com.binaryapp.data.remote.SupabaseClient
 import com.binaryapp.data.repository.AuthRepository
 import com.binaryapp.utils.ValidationUtils
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 
 /**
  * AuthViewModel - Central ViewModel for all authentication flows.
@@ -34,6 +36,52 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
 
     private val _activeSession = MutableLiveData<Session?>()
     val activeSession: LiveData<Session?> = _activeSession
+
+    // ─── Dashboard Stats Cache ─────────────────────────────────────────────────
+    // Cached so re-visiting the dashboard doesn't trigger redundant network calls.
+
+    data class DashboardStats(val sessionCount: Int, val deviceCount: Int)
+
+    private val _dashboardStats = MutableLiveData<DashboardStats?>(null)
+    val dashboardStats: LiveData<DashboardStats?> = _dashboardStats
+
+    /**
+     * Loads dashboard stats from the network.
+     * If stats are already cached (non-null), skips the network call entirely.
+     * Call [refreshDashboardStats] to force a refresh (e.g. pull-to-refresh).
+     */
+    fun loadDashboardStats(userId: Long) {
+        if (_dashboardStats.value != null) return  // already cached
+        fetchDashboardStats(userId)
+    }
+
+    /** Forces a fresh network fetch regardless of cache state. */
+    fun refreshDashboardStats(userId: Long) {
+        _dashboardStats.value = null
+        fetchDashboardStats(userId)
+    }
+
+    /** Clears the stats cache — call this on logout. */
+    fun clearDashboardStatsCache() {
+        _dashboardStats.value = null
+    }
+
+    private fun fetchDashboardStats(userId: Long) {
+        if (userId == -1L) return
+        viewModelScope.launch {
+            try {
+                val devicesResponse = SupabaseClient.get("trusted_devices", mapOf("user_id" to "eq.$userId", "select" to "id"))
+                val deviceCount = JSONArray(devicesResponse).length()
+
+                val sessionsResponse = SupabaseClient.get("sessions", mapOf("user_id" to "eq.$userId", "select" to "id"))
+                val sessionCount = maxOf(JSONArray(sessionsResponse).length(), 1)
+
+                _dashboardStats.value = DashboardStats(sessionCount, deviceCount)
+            } catch (e: Exception) {
+                // Keep whatever value is already cached; don't wipe it on transient errors
+            }
+        }
+    }
 
     // ─── Registration ──────────────────────────────────────────────────────────
 

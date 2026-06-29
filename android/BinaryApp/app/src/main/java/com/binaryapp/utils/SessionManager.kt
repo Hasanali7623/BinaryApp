@@ -13,6 +13,12 @@ class SessionManager(context: Context) {
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
+    /**
+     * In-memory location cache — populated once per app session after GPS resolves.
+     * Cleared on logout. NOT persisted to disk (stale on next boot is fine; GPS refetches).
+     */
+    var cachedLocation: String? = null
+
     companion object {
         private const val PREF_NAME = "binary_app_session"
         private const val KEY_USER_ID = "user_id"
@@ -99,6 +105,7 @@ class SessionManager(context: Context) {
      * FIX (Additional): Ensures passwords and tokens are not retained after logout.
      */
     fun clearSession() {
+        cachedLocation = null  // clear in-memory cache on logout
         prefs.edit().clear().apply()
     }
 }

@@ -9,11 +9,10 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.binaryapp.data.remote.SupabaseClient
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
@@ -21,6 +20,10 @@ import org.json.JSONObject
  * Completely autonomous background location tracker.
  * Prompts for permissions, prompts for GPS enablement, and then continuously
  * pushes location updates to the Supabase backend with zero UI freezing.
+ *
+ * FIX (High Priority): Replaced unmanaged CoroutineScope(Dispatchers.IO) with
+ * activity.lifecycleScope so all coroutines are automatically cancelled when
+ * the activity is destroyed — eliminating memory leaks.
  */
 class AutoLocationTracker(
     private val activity: AppCompatActivity,
@@ -28,7 +31,7 @@ class AutoLocationTracker(
 ) {
 
     private val fusedClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
-    
+
     // Request updates every 3 minutes (180,000ms), fastest every 30s.
     // 100m displacement threshold — accurate enough without excessive battery drain.
     private val locationRequest: LocationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 180000L)
@@ -65,18 +68,23 @@ class AutoLocationTracker(
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
             val loc = result.lastLocation ?: return
-            
+
             // Only sync to database if the user is authenticated
             if (!sessionManager.isLoggedIn || sessionManager.userId == -1L) {
                 stopTracking()
                 return
             }
 
-            CoroutineScope(Dispatchers.IO).launch {
+            // FIX: Use activity.lifecycleScope instead of a raw CoroutineScope(Dispatchers.IO).
+            // This ensures the coroutine is cancelled when the activity is destroyed (no memory leak).
+            activity.lifecycleScope.launch {
                 try {
-                    // Reverse geocode to get a readable city name efficiently
-                    val cityState = LocationHelper.geocodeLocation(activity, loc.latitude, loc.longitude) 
-                    
+                    // Reverse geocode — also updates the in-memory cache
+                    val cityState = LocationHelper.geocodeLocation(activity, loc.latitude, loc.longitude)
+
+                    // Cache the resolved location so the dashboard doesn't re-fetch GPS on every visit
+                    sessionManager.cachedLocation = cityState
+
                     val payload = JSONObject().apply {
                         put("user_id", sessionManager.userId)
                         put("latitude", loc.latitude)
@@ -88,7 +96,7 @@ class AutoLocationTracker(
 
                     // Upsert into Supabase user_locations table
                     SupabaseClient.post("user_locations", payload, upsert = true)
-                    Log.d("AutoLocationTracker", "Location synced to backend successfully: $cityState")
+                    Log.d("AutoLocationTracker", "Location synced to backend: $cityState")
                 } catch (e: Exception) {
                     Log.e("AutoLocationTracker", "Failed to sync location to backend: ${e.message}")
                 }
@@ -108,7 +116,6 @@ class AutoLocationTracker(
         if (hasFine || hasCoarse) {
             checkGpsAndStart()
         } else {
-            // Request standard Android permissions
             permissionLauncher.launch(arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -122,13 +129,11 @@ class AutoLocationTracker(
         val task = client.checkLocationSettings(builder.build())
 
         task.addOnSuccessListener {
-            // GPS is already ON
             startLocationUpdates()
         }
 
         task.addOnFailureListener { exception ->
             if (exception is ResolvableApiException) {
-                // GPS is OFF, but we can launch the Android system prompt to enable it
                 try {
                     val intentSenderRequest = IntentSenderRequest.Builder(exception.resolution).build()
                     gpsResolutionLauncher.launch(intentSenderRequest)
@@ -136,7 +141,7 @@ class AutoLocationTracker(
                     Log.e("AutoLocationTracker", "Error showing GPS enablement prompt: ${sendEx.message}")
                 }
             } else {
-                Log.e("AutoLocationTracker", "Location settings are inadequate, and cannot be fixed automatically.")
+                Log.e("AutoLocationTracker", "Location settings inadequate and cannot be fixed automatically.")
             }
         }
     }
