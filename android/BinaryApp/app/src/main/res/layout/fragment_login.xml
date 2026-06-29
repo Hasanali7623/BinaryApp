@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="BINARYAPP"
+            android:text="@string/binaryapp"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -38,7 +38,7 @@
             android:background="@drawable/bg_badge_blue"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
-            android:text="SECURE ACCESS"
+            android:text="@string/secure_access"
             android:textColor="@color/neon_blue"
             android:textSize="10sp"
             android:letterSpacing="0.15"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="Welcome Back"
+            android:text="@string/welcome_back"
             android:textColor="@color/text_primary"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Sign in to securely access your infrastructure and connected workstations."
+            android:text="@string/login_subtitle"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Email Address"
+            android:text="@string/email_address"
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +104,7 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="hello@enterprise"
+                android:hint="@string/login_email_hint"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint" />
@@ -116,7 +116,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Password"
+            android:text="@string/password"
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +145,7 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="••••••••••"
+                android:hint="@string/login_password_hint"
                 android:inputType="textPassword"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint" />
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:buttonTint="@color/neon_blue"
-            android:text="Remember this device"
+            android:text="@string/remember_device"
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -171,7 +171,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Forgot Password?"
+            android:text="@string/forgot_password"
             android:textColor="@color/neon_blue"
             android:textSize="13sp"
             android:clickable="true"
@@ -179,29 +179,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilPassword" />
 
-        <!-- Progress bar -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:indeterminateTint="@color/neon_blue"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cbRememberDevice" />
-
-        <!-- Sign In button -->
-        <Button
-            android:id="@+id/btnSignIn"
-            style="@style/GlowButton"
+        <!-- Sign In Button Container -->
+        <FrameLayout
+            android:id="@+id/layoutSignIn"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginTop="20dp"
-            android:text="Sign In"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/progressBar" />
+            app:layout_constraintTop_toBottomOf="@id/cbRememberDevice">
+
+            <Button
+                android:id="@+id/btnSignIn"
+                style="@style/GlowButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/sign_in" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/white"
+                android:elevation="4dp"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <!-- Divider OR -->
         <TextView
@@ -210,12 +213,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="OR"
+            android:text="@string/login_or"
             android:textColor="@color/text_hint"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnSignIn" />
+            app:layout_constraintTop_toBottomOf="@id/layoutSignIn" />
 
         <!-- Social Buttons -->
         <Button
@@ -225,7 +228,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:text="🔵 Google"
+            android:text="@string/login_google"
             app:layout_constraintEnd_toStartOf="@id/btnMicrosoft"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvOr" />
@@ -237,10 +240,24 @@
             android:layout_height="48dp"
             android:layout_marginTop="12dp"
             android:layout_marginStart="8dp"
-            android:text="🟦 Microsoft"
+            android:text="@string/login_microsoft"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnGoogle"
             app:layout_constraintTop_toBottomOf="@id/tvOr" />
+            
+        <Button
+            android:id="@+id/btnPhoneAuth"
+            style="@style/OutlineButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/login_phone"
+            app:icon="@drawable/ic_phone"
+            app:iconGravity="textStart"
+            app:iconTint="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnGoogle" />
 
         <!-- Enterprise Security card -->
         <androidx.cardview.widget.CardView
@@ -248,12 +265,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:cardBackgroundColor="@color/glass_bg"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnGoogle">
+            app:layout_constraintTop_toBottomOf="@id/btnPhoneAuth"
+            app:cardBackgroundColor="@color/glass_bg"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -277,7 +294,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Enterprise Security"
+                        android:text="@string/enterprise_security"
                         android:textColor="@color/text_primary"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -286,7 +303,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="PROTECTED WITH AES-256 AND ENCRYPTION"
+                        android:text="@string/login_encryption_badge"
                         android:textColor="@color/text_hint"
                         android:textSize="10sp"
                         android:letterSpacing="0.05" />
@@ -309,7 +326,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have an account? "
+                android:text="@string/no_account"
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp" />
 
@@ -319,7 +336,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="Create Account"
+                android:text="@string/create_account"
                 android:textColor="@color/neon_blue"
                 android:textSize="13sp"
                 android:textStyle="bold" />

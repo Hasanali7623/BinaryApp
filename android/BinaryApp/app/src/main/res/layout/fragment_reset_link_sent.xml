@@ -12,7 +12,9 @@
         android:paddingHorizontal="24dp"
         android:paddingBottom="40dp">
 
+        <!-- App name header -->
         <TextView
+            android:id="@+id/tvAppName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -26,131 +28,148 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Hero image -->
         <ImageView
             android:id="@+id/ivHero"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="24dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/img_shield_success"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAppName" />
+            app:layout_constraintTop_toBottomOf="@id/tvAppName" />
 
+        <!-- Badge -->
         <TextView
             android:id="@+id/tvBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_badge_green"
+            android:background="@drawable/bg_badge_blue"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
-            android:text="EMAIL SENT"
-            android:textColor="@color/success_green"
+            android:text="OTP VERIFICATION"
+            android:textColor="@color/neon_blue"
             android:textSize="10sp"
             android:letterSpacing="0.1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivHero" />
 
+        <!-- Title -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Reset Link Sent"
+            android:text="Verify Your Identity"
             android:textColor="@color/text_primary"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvBadge" />
 
+        <!-- Subtitle / email shown -->
         <TextView
             android:id="@+id/tvEmailSent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="We've sent a secure password reset link to:\nsomething@example.com\n\nCheck your inbox and follow the instructions to reset your password."
+            android:text="Enter the OTP sent to your email"
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-        <!-- Tips -->
-        <LinearLayout
-            android:id="@+id/layoutTips"
+        <!-- OTP display (shown when OTP is available) -->
+        <TextView
+            android:id="@+id/tvOtpDisplay"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:padding="12dp"
+            android:background="@drawable/bg_badge_blue"
+            android:text=""
+            android:textColor="@color/neon_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.15"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEmailSent">
+            app:layout_constraintTop_toBottomOf="@id/tvEmailSent" />
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Didn't receive the email?" android:textColor="@color/text_primary"
-                android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="12dp" />
+        <!-- OTP Input -->
+        <TextView
+            android:id="@+id/tvOtpLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="ENTER OTP"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            android:letterSpacing="0.08"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOtpDisplay" />
 
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal" android:paddingVertical="6dp">
-                <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                    android:src="@drawable/ic_check_circle" android:tint="@color/neon_blue" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp" android:text="Check your spam folder"
-                    android:textColor="@color/text_secondary" android:textSize="13sp" />
-            </LinearLayout>
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal" android:paddingVertical="6dp">
-                <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                    android:src="@drawable/ic_check_circle" android:tint="@color/neon_blue" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp" android:text="Verify your email address"
-                    android:textColor="@color/text_secondary" android:textSize="13sp" />
-            </LinearLayout>
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal" android:paddingVertical="6dp">
-                <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                    android:src="@drawable/ic_check_circle" android:tint="@color/neon_blue" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp" android:text="Wait a few minutes"
-                    android:textColor="@color/text_secondary" android:textSize="13sp" />
-            </LinearLayout>
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal" android:paddingVertical="6dp">
-                <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                    android:src="@drawable/ic_check_circle" android:tint="@color/neon_blue" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp" android:text="Request another link"
-                    android:textColor="@color/text_secondary" android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilOtpInput"
+            style="@style/GlowInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:startIconDrawable="@drawable/ic_key"
+            app:startIconTint="@color/text_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOtpLabel">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etOtpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter 6-digit OTP"
+                android:inputType="number"
+                android:maxLength="6"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:gravity="center"
+                android:letterSpacing="0.3"
+                android:textSize="22sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Verify OTP Button -->
         <Button
             android:id="@+id/btnOpenEmailApp"
             style="@style/GlowButton"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginTop="24dp"
-            android:text="Open Email App"
+            android:layout_marginTop="20dp"
+            android:text="Verify OTP &amp; Continue →"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutTips" />
+            app:layout_constraintTop_toBottomOf="@id/tilOtpInput" />
 
+        <!-- Resend OTP -->
         <Button
             android:id="@+id/btnResendLink"
             style="@style/OutlineButton"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginTop="12dp"
-            android:text="Resend Link"
+            android:text="Resend OTP"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnOpenEmailApp" />
 
+        <!-- Back to Sign In -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

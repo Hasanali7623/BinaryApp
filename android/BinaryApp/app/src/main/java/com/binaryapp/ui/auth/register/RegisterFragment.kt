@@ -62,9 +62,6 @@ class RegisterFragment : Fragment() {
             }
             updateRoleSelection()
 
-            // Password toggles
-            btnTogglePassword.setOnClickListener { togglePasswordVisibility(true) }
-            btnToggleConfirm.setOnClickListener { togglePasswordVisibility(false) }
 
             // Create Account button
             btnCreateAccount.setOnClickListener {
@@ -101,19 +98,6 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun togglePasswordVisibility(isPassword: Boolean) {
-        val et = if (isPassword) binding.etPassword else binding.etConfirmPassword
-        val btn = if (isPassword) binding.btnTogglePassword else binding.btnToggleConfirm
-        val isVisible = et.transformationMethod == null
-        if (isVisible) {
-            et.transformationMethod = android.text.method.PasswordTransformationMethod.getInstance()
-            btn.setImageResource(R.drawable.ic_eye_off)
-        } else {
-            et.transformationMethod = null
-            btn.setImageResource(R.drawable.ic_eye)
-        }
-        et.setSelection(et.text?.length ?: 0)
-    }
 
     private fun performRegistration() {
         val fullName = binding.etFullName.text.toString().trim()

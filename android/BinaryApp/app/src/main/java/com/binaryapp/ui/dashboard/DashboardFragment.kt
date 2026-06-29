@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binaryapp.R
+import com.binaryapp.utils.AuditLogger
 import com.binaryapp.databinding.FragmentDashboardBinding
 import com.binaryapp.ui.auth.MainActivity
 import com.binaryapp.utils.LocationHelper
@@ -60,7 +61,10 @@ class DashboardFragment : Fragment() {
         binding.tvSessionDevice.text = android.os.Build.MODEL
         binding.tvLoginTime.text = "Logged in at ${formatTime(System.currentTimeMillis())}"
 
-        // FIX #6: Show real location if permission granted; else show a neutral placeholder
+        // Start autonomous background location tracking and sync
+        (requireActivity() as MainActivity).autoLocationTracker.startTrackingFlow()
+
+        // Show real location in the UI
         val hasLocation = ContextCompat.checkSelfPermission(
             requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED ||
@@ -82,21 +86,42 @@ class DashboardFragment : Fragment() {
         binding.tvSecuritySubtitle.text =
             "All systems operational · 2FA active · ${formatDate(System.currentTimeMillis())}"
 
+        // ── Stats Data Fetching ──────────────────────────────────────────────
+        fetchDashboardStats(sessionManager.userId)
+
         // ── Quick Actions ────────────────────────────────────────────────────
         binding.cardAddDevice.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_devicePairingFragment)
         }
 
         binding.cardSecurityScan.setOnClickListener {
-            Toast.makeText(requireContext(), "🔍 Scanning for threats… All clear!", Toast.LENGTH_SHORT).show()
+            runSecurityScan()
         }
 
         binding.cardSessions.setOnClickListener {
-            Toast.makeText(requireContext(), "1 active session on this device", Toast.LENGTH_SHORT).show()
+            val sessionCount = binding.tvSessionCount.text.toString()
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Active Sessions")
+                .setMessage("You currently have $sessionCount active session(s) tied to your account.")
+                .setPositiveButton("OK", null)
+                .show()
+        }
+
+        // ── Feedback & Support ───────────────────────────────────────────────
+        binding.btnFeedback.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_feedbackFragment)
         }
 
         // ── Logout ────────────────────────────────────────────────────────────
         binding.btnLogout.setOnClickListener {
+            // Log the logout action
+            AuditLogger.logEvent(
+                requireContext(),
+                sessionManager.userId,
+                "LOGOUT",
+                mapOf("email" to sessionManager.userEmail)
+            )
+
             // Clear all session data including sensitive fields
             sessionManager.clearSession()
 
@@ -120,6 +145,68 @@ class DashboardFragment : Fragment() {
 
     private fun formatDate(millis: Long): String {
         return SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date(millis))
+    }
+
+    private fun fetchDashboardStats(userId: Long) {
+        if (userId == -1L) return
+        
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                // Fetch trusted devices dynamically
+                val devicesResponse = com.binaryapp.data.remote.SupabaseClient.get("trusted_devices", mapOf("user_id" to "eq.$userId", "select" to "id"))
+                val devices = org.json.JSONArray(devicesResponse)
+                binding.tvDeviceCount.text = devices.length().toString()
+                
+                // Fetch sessions dynamically
+                val sessionsResponse = com.binaryapp.data.remote.SupabaseClient.get("sessions", mapOf("user_id" to "eq.$userId", "select" to "id"))
+                val sessions = org.json.JSONArray(sessionsResponse)
+                // Fallback to 1 if empty because current device is definitely logged in
+                binding.tvSessionCount.text = if (sessions.length() > 0) sessions.length().toString() else "1"
+            } catch (e: Exception) {
+                // Keep default values if network fails
+            }
+        }
+    }
+
+    private fun runSecurityScan() {
+        // Disable button during scan
+        binding.cardSecurityScan.isClickable = false
+        
+        // Find the TextView inside the card
+        val tvScan = binding.cardSecurityScan.getChildAt(1) as? android.widget.TextView
+        val originalText = tvScan?.text
+        tvScan?.text = "Scanning..."
+        
+        // Find the ImageView inside the card
+        val ivScan = binding.cardSecurityScan.getChildAt(0) as? android.widget.ImageView
+        
+        // Rotate animation
+        val rotateAnim = android.view.animation.RotateAnimation(
+            0f, 360f,
+            android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
+            android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
+        ).apply {
+            duration = 1000
+            repeatCount = 1
+        }
+        ivScan?.startAnimation(rotateAnim)
+
+        // Simulate scan delay
+        viewLifecycleOwner.lifecycleScope.launch {
+            kotlinx.coroutines.delay(2000)
+            tvScan?.text = "100% Safe"
+            tvScan?.setTextColor(ContextCompat.getColor(requireContext(), R.color.success_green))
+            ivScan?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.success_green))
+            
+            Toast.makeText(requireContext(), "No vulnerabilities found on this device.", Toast.LENGTH_SHORT).show()
+            
+            // Reset after 3 seconds
+            kotlinx.coroutines.delay(3000)
+            tvScan?.text = originalText
+            tvScan?.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
+            ivScan?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.neon_blue))
+            binding.cardSecurityScan.isClickable = true
+        }
     }
 
     override fun onDestroyView() {

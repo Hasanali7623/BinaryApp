@@ -60,7 +60,7 @@ class BiometricFragment : Fragment() {
     }
 
     private fun setupUI() {
-        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        binding.topBar.btnBack.setOnClickListener { findNavController().navigateUp() }
 
         // FIX #2: Clicking a card makes it the sole selected option.
         // The RadioButton inside each card is updated programmatically to keep them in sync.

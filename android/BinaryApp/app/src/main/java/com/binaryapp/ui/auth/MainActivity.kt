@@ -11,22 +11,22 @@ import com.binaryapp.databinding.ActivityMainBinding
 import com.binaryapp.utils.SessionManager
 import com.binaryapp.viewmodel.AuthViewModel
 import com.binaryapp.viewmodel.AuthViewModelFactory
+import com.binaryapp.utils.CrashReporter
+import com.binaryapp.utils.AutoLocationTracker
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import android.view.LayoutInflater
 
 /**
  * Main Activity - Single Activity host for all auth fragments.
  * Manages Navigation Component graph and theme setup.
- *
- * FIX #3: Session state is read from SessionManager (SharedPreferences) on every launch.
- * - Authenticated users start directly at dashboardFragment.
- * - The loginFragment is NOT in the back stack when starting at dashboard.
- * - Unauthenticated users start at loginFragment.
- * This ensures correct behaviour after force-close, recent-app removal, and normal restart.
  */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var authViewModel: AuthViewModel
     lateinit var sessionManager: SessionManager
+    lateinit var autoLocationTracker: AutoLocationTracker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -36,7 +36,36 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupViewModel()
+        
+        // Initialize AutoLocationTracker
+        autoLocationTracker = AutoLocationTracker(this, sessionManager)
+        
         setupNavigation()
+        checkPendingCrash()
+    }
+
+    private fun checkPendingCrash() {
+        if (CrashReporter.hasPendingFatalCrash(this)) {
+            val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_crash_report, null)
+            val etExplanation = dialogView.findViewById<EditText>(R.id.etCrashExplanation)
+            val etSteps = dialogView.findViewById<EditText>(R.id.etCrashSteps)
+
+            AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setCancelable(false)
+                .setPositiveButton("Submit Report") { dialog: android.content.DialogInterface, _: Int ->
+                    val explanation = etExplanation?.text?.toString()?.trim() ?: ""
+                    val steps = etSteps?.text?.toString()?.trim() ?: ""
+                    // All fields optional, just send
+                    CrashReporter.submitFatalCrashWithContext(this@MainActivity, explanation, steps)
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Ignore") { dialog: android.content.DialogInterface, _: Int ->
+                    CrashReporter.ignoreAndClearCrash(this@MainActivity)
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     private fun setupNavigation() {
@@ -45,14 +74,11 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.nav_auth)
 
-        // FIX #3: Set startDestination based on persisted session state.
-        // Using setStartDestination() ensures the chosen fragment IS the root of the back stack —
-        // so pressing Back from dashboard exits the app, not returns to login.
         if (sessionManager.isLoggedIn) {
-            // Existing authenticated session → go directly to dashboard
+            // User is already logged in, skip login screen and go to dashboard
             navGraph.setStartDestination(R.id.dashboardFragment)
+            autoLocationTracker.startTrackingFlow()
         } else {
-            // Not authenticated → show login
             navGraph.setStartDestination(R.id.loginFragment)
         }
 
@@ -64,5 +90,12 @@ class MainActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         val factory = AuthViewModelFactory(repository)
         authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::autoLocationTracker.isInitialized) {
+            autoLocationTracker.stopTracking()
+        }
     }
 }

@@ -12,6 +12,7 @@ class BinaryApp : Application() {
         super.onCreate()
         instance = this
         com.binaryapp.data.remote.SupabaseClient.initialize(this)
+        com.binaryapp.utils.CrashReporter.initialize(this)
     }
 
     companion object {

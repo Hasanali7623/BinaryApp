@@ -12,41 +12,25 @@
         android:paddingHorizontal="24dp"
         android:paddingBottom="40dp">
 
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_icon_btn"
-            android:src="@drawable/ic_arrow_back"
-            android:tint="@color/text_primary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="0dp"
+        <include
+            android:id="@+id/topBar"
+            layout="@layout/layout_top_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="BINARYAPP"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivHero"
-            android:layout_width="220dp"
-            android:layout_height="180dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            app:layout_constraintWidth_percent="0.6"
+            app:layout_constraintDimensionRatio="22:18"
             android:src="@drawable/img_biometric"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnBack" />
+            app:layout_constraintTop_toBottomOf="@id/topBar" />
 
         <TextView
             android:id="@+id/tvBadge"
@@ -56,7 +40,7 @@
             android:background="@drawable/bg_badge_blue"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
-            android:text="ADVANCED SECURITY"
+            android:text="@string/biometric_badge"
             android:textColor="@color/neon_blue"
             android:textSize="10sp"
             android:letterSpacing="0.1"
@@ -70,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:text="Enable Biometric\nSecurity"
+            android:text="@string/biometric_title"
             android:textColor="@color/text_primary"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -84,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Secure your InfraView account using Face ID or Fingerprint authentication for faster and safer access."
+            android:text="@string/biometric_subtitle"
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,15 +87,15 @@
             app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="⚡  Faster Login Experience" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+                android:text="@string/biometric_faster_login" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="🔒  Enterprise-Grade Protection" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+                android:text="@string/biometric_enterprise_protection" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="🛡️  Secure Session Access" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+                android:text="@string/biometric_secure_session" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="🔑  Reduced Password Usage" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+                android:text="@string/biometric_reduced_password" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="✅  Instant Device Verification" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
+                android:text="@string/biometric_instant_device" android:textColor="@color/text_primary" android:textSize="13sp" android:paddingVertical="5dp" />
         </LinearLayout>
 
         <!-- Biometric options -->
@@ -147,10 +131,10 @@
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Face ID" android:textColor="@color/text_primary"
+                        android:text="@string/biometric_face_id" android:textColor="@color/text_primary"
                         android:textSize="16sp" android:textStyle="bold" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Use facial recognition to unlock instantly."
+                        android:text="@string/biometric_face_id_desc"
                         android:textColor="@color/text_secondary" android:textSize="12sp" android:layout_marginTop="2dp" />
                 </LinearLayout>
 
@@ -198,10 +182,10 @@
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Fingerprint" android:textColor="@color/text_primary"
+                        android:text="@string/biometric_fingerprint" android:textColor="@color/text_primary"
                         android:textSize="16sp" android:textStyle="bold" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Scan your fingerprint for secure access."
+                        android:text="@string/biometric_fingerprint_desc"
                         android:textColor="@color/text_secondary" android:textSize="12sp" android:layout_marginTop="2dp" />
                 </LinearLayout>
 
@@ -223,7 +207,7 @@
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginTop="24dp"
-            android:text="Enable Biometrics"
+            android:text="@string/enable_biometrics"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardFingerprint" />
@@ -234,7 +218,7 @@
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginTop="12dp"
-            android:text="Skip For Now"
+            android:text="@string/skip_for_now"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnEnableBiometrics" />

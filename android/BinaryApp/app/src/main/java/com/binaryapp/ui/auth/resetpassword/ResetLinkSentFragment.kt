@@ -1,7 +1,5 @@
 package com.binaryapp.ui.auth.resetpassword
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +15,9 @@ import com.binaryapp.utils.SessionManager
 import com.binaryapp.viewmodel.AuthViewModel
 
 /**
- * Reset Link Sent Fragment - Confirmation that reset email was sent.
+ * Reset OTP Fragment — User enters the OTP that was generated after requesting password reset.
+ * The OTP is shown directly on-screen (stored in generatedOtp LiveData) for easy entry.
+ * Once verified, navigates to CreateNewPasswordFragment.
  */
 class ResetLinkSentFragment : Fragment() {
 
@@ -26,6 +26,8 @@ class ResetLinkSentFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by activityViewModels()
     private lateinit var sessionManager: SessionManager
+
+    private var generatedOtp: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,33 +43,42 @@ class ResetLinkSentFragment : Fragment() {
         sessionManager = (requireActivity() as MainActivity).sessionManager
 
         val email = sessionManager.resetEmail
-        binding.tvEmailSent.text = "We've sent a secure password reset link to:\n$email"
+        binding.tvEmailSent.text = "Enter the OTP sent to:\n$email"
 
-        binding.btnOpenEmailApp.setOnClickListener {
-            try {
-                val intent = Intent(Intent.ACTION_MAIN).apply {
-                    addCategory(Intent.CATEGORY_APP_EMAIL)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                startActivity(intent)
-            } catch (e: Exception) {
-                Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
+        // Observe the generated OTP and display it on screen for easy entry
+        authViewModel.generatedOtp.observe(viewLifecycleOwner) { otp ->
+            if (!otp.isNullOrBlank()) {
+                generatedOtp = otp
+                binding.tvOtpDisplay.visibility = View.VISIBLE
+                binding.tvOtpDisplay.text = "Your OTP: $otp"
             }
         }
 
+        // Verify OTP button
+        binding.btnOpenEmailApp.text = "Verify OTP & Continue"
+        binding.btnOpenEmailApp.setOnClickListener {
+            val enteredOtp = binding.etOtpInput.text?.toString()?.trim() ?: ""
+            if (enteredOtp.isBlank()) {
+                binding.tilOtpInput.error = "Please enter the OTP"
+                return@setOnClickListener
+            }
+            if (enteredOtp != generatedOtp) {
+                binding.tilOtpInput.error = "Incorrect OTP. Please try again."
+                return@setOnClickListener
+            }
+            binding.tilOtpInput.error = null
+            // OTP verified — navigate to create new password
+            findNavController().navigate(R.id.action_resetLinkSentFragment_to_createNewPasswordFragment)
+        }
+
+        // Resend OTP
         binding.btnResendLink.setOnClickListener {
             authViewModel.initiatePasswordReset(email)
-            Toast.makeText(context, "Reset link resent!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "New OTP sent!", Toast.LENGTH_SHORT).show()
         }
 
         binding.tvBackToSignIn.setOnClickListener {
             findNavController().navigate(R.id.action_resetLinkSentFragment_to_loginFragment)
-        }
-
-        // For demo purposes, navigate to password reset screen
-        binding.btnOpenEmailApp.setOnLongClickListener {
-            findNavController().navigate(R.id.action_resetLinkSentFragment_to_createNewPasswordFragment)
-            true
         }
     }
 

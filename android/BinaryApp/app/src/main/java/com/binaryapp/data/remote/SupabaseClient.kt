@@ -70,12 +70,19 @@ object SupabaseClient {
         }
     }
 
-    suspend fun post(path: String, jsonBody: String, preferRepresentation: Boolean = false): String = withContext(Dispatchers.IO) {
+    suspend fun post(path: String, jsonBody: String, preferRepresentation: Boolean = false, upsert: Boolean = false): String = withContext(Dispatchers.IO) {
         val url = buildUrl(path)
         val body = jsonBody.toRequestBody(JSON_MEDIA_TYPE)
         val headersBuilder = getHeaders().newBuilder()
-        if (preferRepresentation) {
-            headersBuilder.add("Prefer", "return=representation")
+        
+        var preferHeader = ""
+        if (preferRepresentation) preferHeader += "return=representation"
+        if (upsert) {
+            if (preferHeader.isNotEmpty()) preferHeader += ","
+            preferHeader += "resolution=merge-duplicates"
+        }
+        if (preferHeader.isNotEmpty()) {
+            headersBuilder.add("Prefer", preferHeader)
         }
         val request = Request.Builder()
             .url(url)

@@ -12,8 +12,9 @@
         android:paddingHorizontal="24dp"
         android:paddingBottom="40dp">
 
+        <!-- Top bar -->
         <ImageButton
-            android:id="@+id/btnBack"
+            android:id="@+id/btnBackToLogin"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="BINARYAPP"
+            android:text="@string/binaryapp"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -41,24 +42,24 @@
             android:id="@+id/ivHero"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/img_device_pairing"
+            android:scaleType="fitCenter"
             app:layout_constraintWidth_percent="0.5"
             app:layout_constraintDimensionRatio="H,5:4"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/img_shield_verify"
-            android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnBack" />
+            app:layout_constraintTop_toBottomOf="@id/btnBackToLogin" />
 
         <TextView
             android:id="@+id/tvBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_badge_blue"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
-            android:text="ACCOUNT RECOVERY"
+            android:text="PHONE AUTHENTICATION"
             android:textColor="@color/neon_blue"
             android:textSize="10sp"
             android:letterSpacing="0.1"
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:text="Forgot Password?"
+            android:text="Login with Phone"
             android:textColor="@color/text_primary"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -86,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Don't worry. Enter your registered email address and we'll send you a secure password reset link."
+            android:text="Enter your mobile number. We will send a secure One-Time Password to verify your identity."
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,11 +95,11 @@
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
         <TextView
-            android:id="@+id/tvEmailLabel"
+            android:id="@+id/tvPhoneLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="Email Address"
+            android:layout_marginTop="32dp"
+            android:text="Mobile Number"
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -106,101 +107,58 @@
             app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilEmail"
+            android:id="@+id/tilPhone"
             style="@style/GlowInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            app:startIconDrawable="@drawable/ic_email"
+            app:startIconDrawable="@drawable/ic_phone"
             app:startIconTint="@color/text_secondary"
+            app:hintEnabled="false"
+            app:prefixText="+91 "
+            app:prefixTextColor="@color/text_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEmailLabel">
+            app:layout_constraintTop_toBottomOf="@id/tvPhoneLabel">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
+                android:id="@+id/etPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your registered email"
-                android:inputType="textEmailAddress"
+                android:paddingStart="4dp"
+                android:paddingEnd="16dp"
+                android:hint="98765 43210"
+                android:inputType="phone"
                 android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_hint" />
+                android:textColorHint="@color/text_hint"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Progress bar -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:indeterminateTint="@color/neon_blue"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilEmail" />
-
-        <Button
-            android:id="@+id/btnSendResetLink"
-            style="@style/GlowButton"
+        <FrameLayout
+            android:id="@+id/layoutSendOtp"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginTop="16dp"
-            android:text="Send Reset Link"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/progressBar" />
+            app:layout_constraintTop_toBottomOf="@id/tilPhone">
 
-        <!-- Secure Recovery card -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardSecureRecovery"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:cardBackgroundColor="@color/glass_bg"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnSendResetLink">
-
-            <LinearLayout
+            <Button
+                android:id="@+id/btnSendOtp"
+                style="@style/GlowButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="14dp">
+                android:layout_height="match_parent"
+                android:text="Send Secure OTP" />
 
-                <ImageView android:layout_width="28dp" android:layout_height="28dp"
-                    android:src="@drawable/ic_shield" android:tint="@color/neon_blue" />
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Secure Recovery"
-                        android:textColor="@color/text_primary" android:textSize="13sp" android:textStyle="bold" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="A password reset link will only be sent to verified email addresses associated with your account."
-                        android:textColor="@color/text_hint" android:textSize="11sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardSecureRecovery">
-
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Remember your password? " android:textColor="@color/text_secondary" android:textSize="13sp" />
-            <TextView android:id="@+id/tvBackToSignIn" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:clickable="true" android:focusable="true"
-                android:text="Back to Sign In" android:textColor="@color/neon_blue" android:textSize="13sp" android:textStyle="bold" />
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/white"
+                android:elevation="4dp"
+                android:visibility="gone" />
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

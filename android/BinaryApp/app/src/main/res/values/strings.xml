@@ -29,4 +29,36 @@
     <string name="back_to_sign_in">Back to Sign In</string>
     <string name="binaryapp">BINARYAPP</string>
     <string name="enterprise_security">Enterprise Security</string>
+    <string name="biometric_badge">ADVANCED SECURITY</string>
+    <string name="biometric_title">Enable Biometric\nSecurity</string>
+    <string name="biometric_subtitle">Secure your InfraView account using Face ID or Fingerprint authentication for faster and safer access.</string>
+    <string name="biometric_faster_login">⚡  Faster Login Experience</string>
+    <string name="biometric_enterprise_protection">🔒  Enterprise-Grade Protection</string>
+    <string name="biometric_secure_session">🛡️  Secure Session Access</string>
+    <string name="biometric_reduced_password">🔑  Reduced Password Usage</string>
+    <string name="biometric_instant_device">✅  Instant Device Verification</string>
+    <string name="biometric_face_id">Face ID</string>
+    <string name="biometric_face_id_desc">Use facial recognition to unlock instantly.</string>
+    <string name="biometric_fingerprint">Fingerprint</string>
+    <string name="biometric_fingerprint_desc">Scan your fingerprint for secure access.</string>
+    <string name="enable_biometrics">Enable Biometrics</string>
+    <string name="skip_for_now">Skip For Now</string>
+    
+    <string name="feedback_title">FEEDBACK</string>
+    <string name="feedback_heading">We value your feedback</string>
+    <string name="feedback_subtitle">Report a bug, request a feature, or just tell us how much you love BinaryApp.</string>
+    <string name="feedback_category_label">Category</string>
+    <string name="feedback_rate_experience">Rate your experience</string>
+    <string name="feedback_message_label">Message</string>
+    <string name="feedback_message_hint">Type your message here...</string>
+    <string name="feedback_submit">Submit Feedback</string>
+    
+    <string name="login_subtitle">Sign in to securely access your infrastructure and connected workstations.</string>
+    <string name="login_email_hint">hello@enterprise</string>
+    <string name="login_password_hint">••••••••••</string>
+    <string name="login_or">OR</string>
+    <string name="login_google">🔵 Google</string>
+    <string name="login_microsoft">🟦 Microsoft</string>
+    <string name="login_phone">Continue with Phone (OTP)</string>
+    <string name="login_encryption_badge">PROTECTED WITH AES-256 AND ENCRYPTION</string>
 </resources>

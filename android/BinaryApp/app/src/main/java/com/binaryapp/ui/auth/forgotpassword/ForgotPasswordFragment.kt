@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.binaryapp.R
 import com.binaryapp.databinding.FragmentForgotPasswordBinding
 import com.binaryapp.ui.auth.MainActivity
+import com.binaryapp.utils.AuditLogger
 import com.binaryapp.utils.SessionManager
 import com.binaryapp.utils.ValidationUtils
 import com.binaryapp.viewmodel.AuthViewModel
@@ -70,6 +71,13 @@ class ForgotPasswordFragment : Fragment() {
                     binding.btnSendResetLink.isEnabled = true
                     binding.progressBar.visibility = View.GONE
                     if (state.message == "reset_initiated") {
+                        val email = sessionManager.resetEmail
+                        AuditLogger.logEvent(
+                            requireContext(),
+                            null, // User ID not immediately available from email, but metadata tracks it
+                            "PASSWORD_RESET_REQUEST",
+                            mapOf("email" to email)
+                        )
                         findNavController().navigate(R.id.action_forgotPasswordFragment_to_resetLinkSentFragment)
                         authViewModel.resetState()
                     }

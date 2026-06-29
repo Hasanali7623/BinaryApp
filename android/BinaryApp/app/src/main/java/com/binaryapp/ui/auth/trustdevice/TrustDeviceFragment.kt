@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.binaryapp.R
 import com.binaryapp.databinding.FragmentTrustDeviceBinding
 import com.binaryapp.ui.auth.MainActivity
+import com.binaryapp.utils.AuditLogger
 import com.binaryapp.utils.DeviceUtils
 import com.binaryapp.utils.LocationHelper
 import com.binaryapp.utils.SessionManager
@@ -140,6 +141,13 @@ class TrustDeviceFragment : Fragment() {
                     userId,
                     DeviceUtils.getDeviceInfo(),
                     deviceLocation // FIX #6: Use real location
+                )
+                // Log device trusted event
+                AuditLogger.logEvent(
+                    requireContext(),
+                    userId,
+                    "DEVICE_TRUSTED",
+                    mapOf("device_model" to DeviceUtils.getDeviceName(), "location" to deviceLocation)
                 )
             }
             findNavController().navigate(R.id.action_trustDeviceFragment_to_accessGrantedFragment)

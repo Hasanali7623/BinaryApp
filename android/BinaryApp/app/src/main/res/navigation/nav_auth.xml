@@ -39,6 +39,14 @@
             app:exitAnim="@anim/fade_out"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        
+        <action
+            android:id="@+id/action_loginFragment_to_phoneAuthFragment"
+            app:destination="@id/phoneAuthFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <!-- Register -->
@@ -173,6 +181,11 @@
             app:destination="@id/devicePairingFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_feedbackFragment"
+            app:destination="@id/feedbackFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <!-- Forgot Password -->
@@ -235,6 +248,39 @@
         <action
             android:id="@+id/action_passwordChangedFragment_to_loginFragment"
             app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Feedback -->
+    <fragment
+        android:id="@+id/feedbackFragment"
+        android:name="com.binaryapp.ui.dashboard.FeedbackFragment"
+        android:label="Feedback &amp; Support"
+        tools:layout="@layout/fragment_feedback" />
+
+    <fragment
+        android:id="@+id/phoneAuthFragment"
+        android:name="com.binaryapp.ui.auth.otp.PhoneAuthFragment"
+        android:label="Login with Phone"
+        tools:layout="@layout/fragment_phone_auth">
+        <action
+            android:id="@+id/action_phoneAuthFragment_to_verifyOtpFragment"
+            app:destination="@id/verifyOtpFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/verifyOtpFragment"
+        android:name="com.binaryapp.ui.auth.otp.VerifyOtpFragment"
+        android:label="Verify OTP"
+        tools:layout="@layout/fragment_verify_otp">
+        <action
+            android:id="@+id/action_verifyOtpFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>

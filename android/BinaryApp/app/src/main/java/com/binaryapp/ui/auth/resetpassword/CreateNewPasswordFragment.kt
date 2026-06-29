@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.binaryapp.R
 import com.binaryapp.databinding.FragmentCreateNewPasswordBinding
 import com.binaryapp.ui.auth.MainActivity
+import com.binaryapp.utils.AuditLogger
 import com.binaryapp.utils.SessionManager
 import com.binaryapp.utils.ValidationUtils
 import com.binaryapp.viewmodel.AuthViewModel
@@ -62,9 +63,10 @@ class CreateNewPasswordFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 val password = s.toString()
                 updatePasswordStrength(password)
-                updateRequirements(password)
             }
         })
+        // Hide the strict requirements card — only 8 chars minimum needed
+        binding.cardRequirements.visibility = android.view.View.GONE
     }
 
     private fun updatePasswordStrength(password: String) {
@@ -79,20 +81,6 @@ class CreateNewPasswordFragment : Fragment() {
             ValidationUtils.PasswordStrength.VERY_STRONG -> R.color.success_green
         }
         binding.tvStrengthLabel.setTextColor(ContextCompat.getColor(requireContext(), color))
-    }
-
-    private fun updateRequirements(password: String) {
-        setRequirementCheck(binding.tvReq1, ValidationUtils.hasMinLength(password))
-        setRequirementCheck(binding.tvReq2, ValidationUtils.hasUppercase(password))
-        setRequirementCheck(binding.tvReq3, ValidationUtils.hasNumber(password))
-        setRequirementCheck(binding.tvReq4, ValidationUtils.hasSpecialChar(password))
-    }
-
-    private fun setRequirementCheck(view: android.widget.TextView, met: Boolean) {
-        val icon = if (met) "✓" else "○"
-        val color = if (met) R.color.success_green else R.color.text_secondary
-        view.setTextColor(ContextCompat.getColor(requireContext(), color))
-        view.text = "$icon ${view.text.toString().substringAfter(" ")}"
     }
 
     private fun updatePassword() {
@@ -129,6 +117,13 @@ class CreateNewPasswordFragment : Fragment() {
                     binding.btnUpdatePassword.isEnabled = true
                     binding.progressBar.visibility = View.GONE
                     if (state.message == "password_updated") {
+                        val email = sessionManager.resetEmail
+                        AuditLogger.logEvent(
+                            requireContext(),
+                            null, // User ID not immediately available from email, but metadata tracks it
+                            "PASSWORD_UPDATED",
+                            mapOf("email" to email)
+                        )
                         findNavController().navigate(R.id.action_createNewPasswordFragment_to_passwordChangedFragment)
                         authViewModel.resetState()
                     }

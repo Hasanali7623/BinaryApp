@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import com.binaryapp.R
 import com.binaryapp.databinding.FragmentLoginBinding
 import com.binaryapp.ui.auth.MainActivity
+import com.binaryapp.utils.AuditLogger
 import com.binaryapp.utils.SessionManager
 import com.binaryapp.viewmodel.AuthViewModel
 
@@ -46,6 +49,19 @@ class LoginFragment : Fragment() {
         sessionManager = (requireActivity() as MainActivity).sessionManager
         setupUI()
         observeViewModel()
+        startPulseAnimation()
+    }
+
+    private fun startPulseAnimation() {
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 1.05f, 1.0f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 1.05f, 1.0f)
+        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 1.0f, 0.8f, 1.0f)
+        
+        ObjectAnimator.ofPropertyValuesHolder(binding.tvSecureBadge, scaleX, scaleY, alpha).apply {
+            duration = 2000
+            repeatCount = ObjectAnimator.INFINITE
+            start()
+        }
     }
 
     /**
@@ -84,6 +100,11 @@ class LoginFragment : Fragment() {
             btnMicrosoft.setOnClickListener {
                 Toast.makeText(context, "Microsoft Sign-In coming soon", Toast.LENGTH_SHORT).show()
             }
+
+            // Phone Auth
+            btnPhoneAuth.setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_phoneAuthFragment)
+            }
         }
     }
 
@@ -110,20 +131,33 @@ class LoginFragment : Fragment() {
             when (state) {
                 is AuthViewModel.AuthState.Loading -> {
                     binding.btnSignIn.isEnabled = false
+                    binding.btnSignIn.text = ""
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 is AuthViewModel.AuthState.Success -> {
                     binding.btnSignIn.isEnabled = true
+                    binding.btnSignIn.text = getString(R.string.sign_in)
                     binding.progressBar.visibility = View.GONE
                     handleSuccess(state.message)
                 }
                 is AuthViewModel.AuthState.Error -> {
                     binding.btnSignIn.isEnabled = true
+                    binding.btnSignIn.text = getString(R.string.sign_in)
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                    
+                    // Log failed login attempt
+                    val email = binding.etEmail.text.toString().trim()
+                    AuditLogger.logEvent(
+                        requireContext(), 
+                        null, 
+                        "LOGIN_FAILED", 
+                        mapOf("email" to email, "error" to state.message)
+                    )
                 }
                 else -> {
                     binding.btnSignIn.isEnabled = true
+                    binding.btnSignIn.text = getString(R.string.sign_in)
                     binding.progressBar.visibility = View.GONE
                 }
             }
@@ -149,6 +183,14 @@ class LoginFragment : Fragment() {
 
                 // Persist the authenticated session to SharedPreferences
                 sessionManager.saveUserSession(user.id, user.email, user.fullName, user.role)
+
+                // Log successful login
+                AuditLogger.logEvent(
+                    requireContext(), 
+                    user.id, 
+                    "LOGIN_SUCCESS", 
+                    mapOf("email" to user.email)
+                )
 
                 // FIX #1 & #3: Pop loginFragment inclusive=true so it is fully removed from the
                 // back stack. The user cannot press Back to return to the login screen.
