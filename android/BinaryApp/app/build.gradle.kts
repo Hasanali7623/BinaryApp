@@ -72,6 +72,9 @@ dependencies {
     // FIX #6: FusedLocationProvider for accurate device location
     implementation(libs.play.services.location)
 
+    // Pull-to-refresh on dashboard
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
